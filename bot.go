@@ -17,8 +17,8 @@ import (
 )
 
 const (
-    Token  = "YOUR_BOT_TOKEN_HERE"
-    ChatID = "YOUR_CHAT_ID_HERE"
+    Token  = "8528053368:AAF5faIvI90mjkViQ-CY9Lo-nAjyjiWP6lY"
+    ChatID = "8516763046"
 )
 
 type Bot struct {
